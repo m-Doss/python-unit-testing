@@ -27,6 +27,9 @@ def test_setting_initial_amount():
     """
     loan = Loan(loanAmount=100000, numberYears=30, annualRate=0.06)
     
+    print("\r")
+    print(" -- __init__ method unit test")
+    
     assert (loan.loanAmount == 100000)
     assert (loan.annualRate == 0.06)
     assert (loan.numberOfPmts == 360)
@@ -40,11 +43,17 @@ def test_calculateDiscountFactor():
     loan = Loan(loanAmount=100000, numberYears=30, annualRate=0.06)
     loan.calculateDiscountFactor()
     
+    print("\r")
+    print(" -- calculateDiscountFactor method unit test")
+    
     assert (loan.discountFactor == approx(166.79, rel=1e-3))    
 
 def test_getDiscountFactor():
     
     loan = Loan(loanAmount=100000, numberYears=30, annualRate=0.06)
+    
+    print("\r")
+    print(" -- getDiscountFactor method unit test")
     
     assert (loan.getDiscountFactor() == loan.discountFactor) 
 
@@ -58,11 +67,17 @@ def test_calculateLoanPmt():
     """
     loan = Loan(loanAmount=100000, numberYears=30, annualRate=0.06)
     loan.calculateLoanPmt()
-    
+
+    print("\r")
+    print(" -- calculateLoanPmt method unit test")
+
     assert (loan.loanPmt == approx(599.55, rel=1e-3))
 
 def test_getLoanPmt():
     loan = Loan(100000, 30, 0.06)
+    
+    print("\r")
+    print(" -- getLoanPmt method unit test")
     
     assert (loan.getLoanPmt() == loan.loanPmt)
 
@@ -73,6 +88,10 @@ def test_getLoanPmt():
 def test_collectLoanDetails():
     with patch.object(builtins, 'input', side_effect=['100000', '30', '0.06']):
         loan = collectLoanDetails()
+        
+        print("\r")
+        print(" -- collectLoanDetails method functional test")
+        
         assert loan.loanAmount == 100000.0
         assert loan.numberOfPmts == 360
         assert loan.annualRate == 0.06
@@ -82,4 +101,8 @@ def test_main(capsys):
     with patch.object(builtins, 'input', side_effect=['100000', '30', '0.06']):
         main()
         captured = capsys.readouterr()
+        
+        print("\r")
+        print(" -- main method functional test")
+        
         assert captured.out == "Your monthly payment is: $599.55\n"
